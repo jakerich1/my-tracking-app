@@ -4,12 +4,13 @@ import Settings from "./pages/Settings.tsx";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { AppSidebar } from "@/components/layout/app-sidebar";
-import { BrowserRouter, Routes, Route } from "react-router";
 import { SidebarProvider } from "@/components/ui/sidebar";
+
+import { Routes, Route, HashRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <SidebarProvider>
         <AppSidebar />
         <Routes>
@@ -17,6 +18,6 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </SidebarProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );

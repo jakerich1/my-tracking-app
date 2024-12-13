@@ -8,9 +8,9 @@ import {
 } from "@/components/ui/card";
 import useStore from "../store";
 import { type FC, useState } from "react";
+import Page from "@/components/layout/Page";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Page from "@/components/layout/Page";
 
 const Settings: FC = () => {
   const [tempApiKey, setTempApiKey] = useState("");

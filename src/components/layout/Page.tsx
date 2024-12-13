@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import useStore from "../../store";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { AlertCircle } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
