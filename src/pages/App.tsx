@@ -1,52 +1,118 @@
-import { type FC } from "react";
+import {
+  Card,
+  CardTitle,
+  CardFooter,
+  CardHeader,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
+import { type FC, useState } from "react";
 import Page from "@/components/layout/Page";
-import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import ProgressBar from "@/components/data/ProgressBar";
 
 const App: FC = () => {
+  const currentData = [
+    {
+      label: "Water",
+      key: "water",
+      value: 1000,
+      target: 3000,
+      unit: "ml",
+      color: "blue",
+    },
+    {
+      label: "Protein",
+      key: "protein",
+      value: 20,
+      target: 150,
+      unit: "g",
+      color: "red",
+    },
+    {
+      label: "Calories",
+      key: "calories",
+      value: 2000,
+      target: 3000,
+      unit: "kcal",
+      color: "green",
+    },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [entryValue, setEntryValue] = useState<string>("");
+  const [entryDescription, setEntryDescription] = useState<string>("");
+
   return (
     <Page title="Tracker">
-      <div className="w-full">
-        <div className="flex flex-col gap-4">
-          <div>
-            <div className="flex items-center justify-between">
-              <Label>Water</Label>
-              <span className="text-xs text-gray-500">1.5L / 2L</span>
-            </div>
-            <div className="flex w-full h-12 bg-gray-300 rounded-md shadow-lg overflow-hidden">
-              <div
-                className="transition-all duration-150 ease-in-out h-full bg-gradient-to-r from-blue-300 to-blue-400"
-                style={{ flexBasis: `${20}%` }}
-              ></div>
-              <div className="h-full flex-grow bg-gradient-to-r from-zinc-200 to-zinc-300"></div>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <Label>Protein</Label>
-              <span className="text-xs text-gray-500">20g / 100g</span>
-            </div>
-            <div className="flex w-full h-12 bg-gray-300 rounded-md shadow-lg overflow-hidden">
-              <div
-                className="transition-all duration-150 ease-in-out h-full bg-gradient-to-r from-red-300 to-red-400"
-                style={{ flexBasis: `${20}%` }}
-              ></div>
-              <div className="h-full flex-grow bg-gradient-to-r from-zinc-200 to-zinc-300"></div>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <Label>Calories</Label>
-              <span className="text-xs text-gray-500">2000 / 2500 kcal</span>
-            </div>
-            <div className="flex w-full h-12 bg-gray-300 rounded-md shadow-lg overflow-hidden">
-              <div
-                className="transition-all duration-150 ease-in-out h-full bg-gradient-to-r from-green-300 to-green-400"
-                style={{ flexBasis: `${20}%` }}
-              ></div>
-              <div className="h-full flex-grow bg-gradient-to-r from-zinc-200 to-zinc-300"></div>
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col gap-4">
+        {currentData.map((data, i) => {
+          if (activeIndex !== null && activeIndex !== i) return null;
+          return (
+            <ProgressBar
+              onClick={() => {
+                setActiveIndex(i);
+              }}
+              {...data}
+            />
+          );
+        })}
+
+        {activeIndex !== null && (
+          <Card>
+            <CardHeader>
+              <CardTitle>{currentData[activeIndex].label}</CardTitle>
+              <CardDescription>
+                {`${currentData[activeIndex].value} out of ${currentData[activeIndex].target}${currentData[activeIndex].unit}`}
+                <br />
+                {`You have ${
+                  currentData[activeIndex].target -
+                  currentData[activeIndex].value
+                }${currentData[activeIndex].unit} remaining`}
+                <br />
+                {`You are ${Math.round(
+                  (currentData[activeIndex].value /
+                    currentData[activeIndex].target) *
+                    100
+                )}% complete`}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-2">
+                <Input
+                  id="entryValue"
+                  type="number"
+                  value={entryValue}
+                  onChange={(e) => setEntryValue(e.target.value)}
+                  placeholder="Value"
+                />
+                <Input
+                  id="entryDescription"
+                  type="text"
+                  value={entryDescription}
+                  onChange={(e) => setEntryDescription(e.target.value)}
+                  placeholder="Description"
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <div className="flex w-full justify-between">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setActiveIndex(null);
+                    setEntryValue("");
+                    setEntryDescription("");
+                  }}
+                >
+                  Close
+                </Button>
+                <Button>Submit</Button>
+              </div>
+            </CardFooter>
+          </Card>
+        )}
       </div>
     </Page>
   );
