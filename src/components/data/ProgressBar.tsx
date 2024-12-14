@@ -32,7 +32,7 @@ const ProgressBar: FC<ProgressBarProps> = ({
       </div>
       <div className="flex w-full h-12 bg-gray-300 rounded-md shadow-lg overflow-hidden">
         <div
-          className={`transition-all rounded-md duration-150 ease-in-out h-full bg-gradient-to-r from-${color}-300 to-${color}-400`}
+          className={`transition-all rounded-md duration-150 ease-in-out h-full bg-gradient-to-r ${color}`}
           style={{
             flexBasis: `${
               (value / target) * 100 > 100 ? 100 : (value / target) * 100
