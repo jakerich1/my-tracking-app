@@ -124,7 +124,7 @@ const App: FC = () => {
   }, [activeIndex, currentData, currentDayData]);
 
   return (
-    <Page title="Tracker">
+    <Page title="Tracker!">
       <div className="flex flex-col gap-4">
         {currentData.map((data, i) => {
           if (activeIndex !== null && activeIndex !== i) return null;
